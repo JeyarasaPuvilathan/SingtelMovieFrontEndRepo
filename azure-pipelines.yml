@@ -13,11 +13,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd SingtelMovieFrontEnd  # Navigate to the Angular project folder
     npm install -g @angular/cli  # Install Angular CLI globally
     npm install  # Install project dependencies
     ng build --prod --output-path=dist  # Build the Angular project, output to dist/
-  workingDirectory: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Set the working directory for the build
+  workingDirectory: '$(Build.SourcesDirectory)'  # Set the working directory for the build
   displayName: 'Build Angular Application'
 
 - script: |
