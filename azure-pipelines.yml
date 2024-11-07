@@ -13,28 +13,18 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    rm -rf node_modules
-    rm package-lock.json
     npm install -g @angular/cli
     npm install
     ng build --prod
+    echo "Build complete. Checking output directory."
+    dir dist/singtel-movie-front-end/  
   displayName: 'Clean and Build Angular Application'
-  
-- script: |
-    echo "Listing files in the working directory after build:"
-    dir $(Build.SourcesDirectory)  # For Windows (or use 'ls' on Linux)
-  displayName: 'List Files in Working Directory After Build'
 
 - task: CopyFiles@2
   inputs:
-    contents: 'dist/**'
+    contents: 'dist/singtel-movie-front-end/**/*'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files'
-
-- script: |
-    echo "Listing files in the Artifact Staging Directory after copy:"
-    dir $(Build.ArtifactStagingDirectory)  # For Windows (or use 'ls' on Linux)
-  displayName: 'List Files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
@@ -43,15 +33,10 @@ steps:
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
 
-- script: |
-    echo "Listing files in the Artifact directory before publishing:"
-    dir $(Build.ArtifactStagingDirectory)  # For Windows (or use 'ls' on Linux)
-  displayName: 'List Files Before Publishing Artifact'
-
 - task: AzureWebApp@1
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)/drop/**'
+    package: '$(Build.ArtifactStagingDirectory)/dist/singtel-movie-front-end/**/*'
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
