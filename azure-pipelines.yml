@@ -13,11 +13,12 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install -g @angular/cli
+    echo "Running npm install"
     npm install
+    echo "Running ng build"
     ng build --prod
     echo "Build complete. Checking output directory."
-    dir dist/singtel-movie-front-end/  
+    dir dist/singtel-movie-front-end/
   displayName: 'Clean and Build Angular Application'
 
 - task: CopyFiles@2
