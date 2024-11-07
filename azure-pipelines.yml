@@ -25,6 +25,11 @@ steps:
     contents: 'dist/singtel-movie-front-end/**/*'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files'
+  
+- script: |
+    echo "Contents of Build Artifact Directory:"
+    dir $(Build.ArtifactStagingDirectory)
+  displayName: 'Verify Files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
