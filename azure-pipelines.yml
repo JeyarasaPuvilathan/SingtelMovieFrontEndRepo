@@ -20,30 +20,30 @@ steps:
   
 - script: |
     echo "Current working directory: $(Build.SourcesDirectory)"
-    echo "Listing contents of dist/ folder:"
-    if exist "$(Build.SourcesDirectory)\dist" (
-        echo "dist folder exists."
-        dir "$(Build.SourcesDirectory)\dist"
+    echo "Listing contents of build output folder:"
+    if exist "$(Build.ArtifactStagingDirectory)" (
+        echo "Build output exists."
+        dir "$(Build.ArtifactStagingDirectory)"
     ) else (
-        echo "dist folder not found."
+        echo "Build output folder not found."
     )
-  displayName: 'Verify Contents of dist Folder'
+  displayName: 'Verify Build Output Folder'
 
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/dist'  # Path to your build output
+    SourceFolder: '$(Build.ArtifactStagingDirectory)'  # Assuming the build output is here
     Contents: '**/*'  # Wildcard to include all files
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
   
 - script: |
-    echo "Contents of Build Artifact Directory:"
-    dir $(Build.ArtifactStagingDirectory)
+    echo "Contents of Artifact Staging Directory:"
+    dir $(Build.ArtifactStagingDirectory)/drop
   displayName: 'Verify Files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/drop'  # Publish from the drop folder
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
