@@ -8,15 +8,17 @@ import { IMovieService } from 'src/app/core/services/iMovie.service';
   styleUrls: ['./movie-list.component.css']
 })
 export class MovieListComponent implements OnInit {
-  Movies: MovieModel[] | undefined;
+  Movies: MovieModel[] = [];
   wait= false;
+  filteredMovies: MovieModel[] = [];
+  searchQuery: string = '';
 
   constructor(
     private MovieService: IMovieService
   ) { }
 
   ngOnInit() {
-
+this.onLoad();
   }
 
   onLoad() {
@@ -26,7 +28,17 @@ export class MovieListComponent implements OnInit {
       (data: MovieModel[]) => {
         this.wait = false;
         this.Movies = data;
+        this.filteredMovies = [...this.Movies];
       }
     )
+
+   
+  }
+
+  filterMovies(): void {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredMovies = this.Movies.filter(movie => 
+      movie.title.toLowerCase().includes(query)
+    );
   }
 }

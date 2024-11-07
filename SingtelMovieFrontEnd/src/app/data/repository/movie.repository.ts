@@ -20,7 +20,7 @@ export class MovieRepository extends IMovieRepository{
 
     getAllMovies(): Observable<MovieModel[]> {
         return this.http
-            .get<MovieEntity[]>('https://localhost:7158/api/Movie/GetAll')
+            .get<MovieEntity[]>('https://testdemo-athraaf7a2bjaxe6.southeastasia-01.azurewebsites.net/api/Movie/GetAll')
             .pipe(
                 map(this.mapper.mapFromList)
             );

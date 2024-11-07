@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { DataModule } from './data/data.module';
 import { ServiceModule } from './service/service.module';
 import { PresentationModule } from './presentation/presentation.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PresentationModule } from './presentation/presentation.module';
     DataModule,
     ServiceModule,
     PresentationModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
