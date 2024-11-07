@@ -1,9 +1,12 @@
-<div style="padding: 10px;">
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" [src]="movie?.title" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{movie?.releaseYear}}</h5>
-        <p class="card-text">Created At: {{movie?.imagePath}}</p>
-      </div>
+<div class="card h-100 shadow-sm">
+    <img 
+      class="card-img-top" 
+      [src]="movie?.imagePath" 
+      alt="{{ movie?.title || 'Movie poster' }}" 
+      style="height: 300px; object-fit: cover;">
+    <div class="card-body text-center">
+      <h5 class="card-title">{{ movie?.title || 'Untitled Movie' }}</h5>
+      <p class="card-text text-muted">Released: {{ movie?.releaseYear }}</p>
     </div>
   </div>
+  
