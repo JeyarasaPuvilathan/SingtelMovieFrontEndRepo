@@ -19,8 +19,10 @@ steps:
   displayName: 'Build Angular Application'
   
 - script: |
+    echo "Current working directory: $(Build.SourcesDirectory)"
     echo "Listing contents of dist/ folder:"
     if exist "$(Build.SourcesDirectory)\dist" (
+        echo "dist folder exists."
         dir "$(Build.SourcesDirectory)\dist"
     ) else (
         echo "dist folder not found."
