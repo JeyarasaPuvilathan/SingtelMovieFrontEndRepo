@@ -19,6 +19,11 @@ steps:
     npm install
     ng build --prod
   displayName: 'Clean and Build Angular Application'
+  
+- script: |
+    echo "Listing files in the working directory after build:"
+    dir $(Build.SourcesDirectory)  # For Windows (or use 'ls' on Linux)
+  displayName: 'List Files in Working Directory After Build'
 
 - task: CopyFiles@2
   inputs:
@@ -26,12 +31,22 @@ steps:
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files'
 
+- script: |
+    echo "Listing files in the Artifact Staging Directory after copy:"
+    dir $(Build.ArtifactStagingDirectory)  # For Windows (or use 'ls' on Linux)
+  displayName: 'List Files in Artifact Staging Directory'
+
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
+
+- script: |
+    echo "Listing files in the Artifact directory before publishing:"
+    dir $(Build.ArtifactStagingDirectory)  # For Windows (or use 'ls' on Linux)
+  displayName: 'List Files Before Publishing Artifact'
 
 - task: AzureWebApp@1
   inputs:
