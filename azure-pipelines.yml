@@ -15,13 +15,13 @@ steps:
 - script: |
    npm install -g @angular/cli
    npm install
-   ng build --prod --output-path=dist/singtel-movie-front-end --aot --optimization
+   ng build --prod
   displayName: 'Build Angular Application'
 
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/dist/singtel-movie-front-end'  # Correct path to the dist folder
+    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist/singtel-movie-front-end'  # Correct path to the dist folder
     Contents: '**/*'  # Wildcard to include all files
     TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Ensure the target folder is inside the artifact staging directory
 
