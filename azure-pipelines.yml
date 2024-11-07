@@ -13,17 +13,19 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-   npm install -g @angular/cli
-   npm install
-   ng build --prod --output-path=dist  # Ensure the output path is set correctly
+    cd SingtelMovieFrontEnd  # Navigate to the Angular project folder
+    npm install -g @angular/cli  # Install Angular CLI globally
+    npm install  # Install project dependencies
+    ng build --prod --output-path=dist  # Build the Angular project, output to dist/
+  workingDirectory: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Set the working directory for the build
   displayName: 'Build Angular Application'
-  
+
 - script: |
-    echo "Current working directory: $(Build.SourcesDirectory)"
+    echo "Current working directory: $(Build.SourcesDirectory)/SingtelMovieFrontEnd"
     echo "Listing contents of dist/ folder:"
-    if exist "$(Build.SourcesDirectory)\dist" (
+    if exist "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist" (
         echo "dist folder exists."
-        dir "$(Build.SourcesDirectory)\dist"
+        dir "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist"
     ) else (
         echo "dist folder not found."
     )
@@ -32,13 +34,18 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)\dist'  # Ensure this is the correct build output path
+    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist'  # Correct path to the dist folder
     Contents: '**/*'  # Wildcard to include all files
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'  # Ensure the target folder is inside the artifact staging directory
+
+- script: |
+    echo "Contents of Artifact Staging Directory:"
+    dir "$(Build.ArtifactStagingDirectory)/drop"  # Verify that files are correctly copied
+  displayName: 'Verify Files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/drop'  # Publish from the drop folder
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/drop'  # Path to publish the drop folder
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
@@ -47,10 +54,9 @@ steps:
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)/drop/**/*'
+    package: '$(Build.ArtifactStagingDirectory)/drop/**/*'  # Correct path to package
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
-
 
 variables:
   system.debug: true
