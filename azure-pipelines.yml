@@ -4,7 +4,7 @@ trigger:
       - main
 
 pool:
-  name: SelfHostedPool
+   vmImage: 'windows-latest'
 
 steps:
 - task: NodeTool@0
@@ -13,18 +13,14 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    echo "Running npm install"
-    cd C:\Users\kanus\OneDrive\Desktop\Singtel\SingtelMovieFrontEndRepo\SingtelMovieFrontEnd
-    npm install
-    echo "Running ng build"
-    ng build --prod
-    echo "Build complete. Checking output directory."
-    dir dist/singtel-movie-front-end/
-  displayName: 'Clean and Build Angular Application'
+   npm install -g @angular/cli
+   npm install
+   ng build --prod
+  displayName: 'Build Angular Application'
 
 - task: CopyFiles@2
   inputs:
-    contents: 'C:\Users\kanus\OneDrive\Desktop\Singtel\SingtelMovieFrontEndRepo\SingtelMovieFrontEnd\dist\singtel-movie-front-end/**/*'
+    contents: 'dist/**'
     targetFolder: '$(Build.ArtifactStagingDirectory)'
   displayName: 'Copy Files'
   
@@ -47,3 +43,6 @@ steps:
     package: '$(Build.ArtifactStagingDirectory)/drop/**/*'
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
+
+variables:
+  system.debug: true
