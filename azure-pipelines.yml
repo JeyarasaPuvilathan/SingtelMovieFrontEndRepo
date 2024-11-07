@@ -27,7 +27,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/drop'  # Path to publish the drop folder
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'  # Path to publish the drop folder
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
@@ -36,7 +36,7 @@ steps:
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)/drop/**/*'  # Correct path to package
+    package: '$(Build.ArtifactStagingDirectory)/**/*'  # Correct path to package
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
 
