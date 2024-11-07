@@ -23,11 +23,11 @@ steps:
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Correct path to the dist folder
     Contents: '**/*'  # Wildcard to include all files
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/SingtelMovieFrontEnd'  # Ensure the target folder is inside the artifact staging directory
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/dist/singtel-movie-front-end'  # Ensure the target folder is inside the artifact staging directory
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/SingtelMovieFrontEnd'  # Path to publish the drop folder
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/dist/singtel-movie-front-end'  # Path to publish the drop folder
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
@@ -36,7 +36,7 @@ steps:
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)/SingtelMovieFrontEnd'  # Correct path to package
+    package: '$(Build.ArtifactStagingDirectory)/dist/singtel-movie-front-end'  # Correct path to package
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
 
