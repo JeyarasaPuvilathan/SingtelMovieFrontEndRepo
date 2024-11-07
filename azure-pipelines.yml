@@ -13,34 +13,17 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install -g @angular/cli  # Install Angular CLI globally
-    npm install  # Install project dependencies
-    ng build --prod --output-path=dist  # Build the Angular project, output to dist/
-  workingDirectory: '$(Build.SourcesDirectory)'  # Set the working directory for the build
+   npm install -g @angular/cli
+   npm install
+   ng build --prod
   displayName: 'Build Angular Application'
-
-- script: |
-    echo "Current working directory: $(Build.SourcesDirectory)/SingtelMovieFrontEnd"
-    echo "Listing contents of dist/ folder:"
-    if exist "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist" (
-        echo "dist folder exists."
-        dir "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist"
-    ) else (
-        echo "dist folder not found."
-    )
-  displayName: 'Verify Build Output Folder'
 
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist'  # Correct path to the dist folder
+    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Correct path to the dist folder
     Contents: '**/*'  # Wildcard to include all files
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'  # Ensure the target folder is inside the artifact staging directory
-
-- script: |
-    echo "Contents of Artifact Staging Directory:"
-    dir "$(Build.ArtifactStagingDirectory)/drop"  # Verify that files are correctly copied
-  displayName: 'Verify Files in Artifact Staging Directory'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Ensure the target folder is inside the artifact staging directory
 
 - task: PublishBuildArtifacts@1
   inputs:
