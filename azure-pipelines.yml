@@ -30,10 +30,11 @@ steps:
   displayName: 'Verify Contents of dist Folder'
 
 - task: CopyFiles@2
+  displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    contents: 'dist/**'
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-  displayName: 'Copy Files'
+    SourceFolder: '$(Build.SourcesDirectory)/dist'  # Path to your build output
+    Contents: '**/*'  # Wildcard to include all files
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
   
 - script: |
     echo "Contents of Build Artifact Directory:"
