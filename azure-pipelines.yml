@@ -37,6 +37,6 @@ steps:
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)/dist/**'
+    package: '$(Build.ArtifactStagingDirectory)/drop/**'
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
