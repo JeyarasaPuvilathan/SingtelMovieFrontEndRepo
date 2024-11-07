@@ -32,7 +32,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.ArtifactStagingDirectory)'  # Assuming the build output is here
+    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Assuming the build output is here
     Contents: '**/*'  # Wildcard to include all files
     TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
   
