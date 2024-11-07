@@ -13,19 +13,21 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-   npm install -g @angular/cli
-   npm install
-   ng build --prod
+    cd SingtelMovieFrontEnd  # Navigate to the Angular project folder
+    npm install -g @angular/cli  # Install Angular CLI globally
+    npm install  # Install project dependencies
+    ng build --prod --output-path=dist  # Build the Angular project, output to dist/
+  workingDirectory: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Set the working directory for the build
   displayName: 'Build Angular Application'
-  
+
 - script: |
-    echo "Current working directory: $(Build.SourcesDirectory)"
-    echo "Listing contents of build output folder:"
-    if exist "$(Build.ArtifactStagingDirectory)" (
-        echo "Build output exists."
-        dir "$(Build.ArtifactStagingDirectory)"
+    echo "Current working directory: $(Build.SourcesDirectory)/SingtelMovieFrontEnd"
+    echo "Listing contents of dist/ folder:"
+    if exist "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist" (
+        echo "dist folder exists."
+        dir "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist"
     ) else (
-        echo "Build output folder not found."
+        echo "dist folder not found."
     )
   displayName: 'Verify Build Output Folder'
 
