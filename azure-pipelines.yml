@@ -20,7 +20,11 @@ steps:
   
 - script: |
     echo "Listing contents of dist/ folder:"
-    dir $(Build.SourcesDirectory)/dist
+    if exist "$(Build.SourcesDirectory)\dist" (
+        dir "$(Build.SourcesDirectory)\dist"
+    ) else (
+        echo "dist folder not found."
+    )
   displayName: 'Verify Contents of dist Folder'
 
 - task: CopyFiles@2
