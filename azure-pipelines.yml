@@ -13,19 +13,17 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    cd SingtelMovieFrontEnd  # Navigate to the Angular project folder
-    npm install -g @angular/cli  # Install Angular CLI globally
-    npm install  # Install project dependencies
-    ng build --prod --output-path=dist  # Build the Angular project, output to dist/
-  workingDirectory: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Set the working directory for the build
+   npm install -g @angular/cli
+   npm install
+   ng build --prod --output-path=dist  # Ensure the output path is set correctly
   displayName: 'Build Angular Application'
-
+  
 - script: |
-    echo "Current working directory: $(Build.SourcesDirectory)/SingtelMovieFrontEnd"
+    echo "Current working directory: $(Build.SourcesDirectory)"
     echo "Listing contents of dist/ folder:"
-    if exist "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist" (
+    if exist "$(Build.SourcesDirectory)\dist" (
         echo "dist folder exists."
-        dir "$(Build.SourcesDirectory)/SingtelMovieFrontEnd/dist"
+        dir "$(Build.SourcesDirectory)\dist"
     ) else (
         echo "dist folder not found."
     )
@@ -34,14 +32,9 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Assuming the build output is here
+    SourceFolder: '$(Build.SourcesDirectory)\dist'  # Ensure this is the correct build output path
     Contents: '**/*'  # Wildcard to include all files
     TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
-  
-- script: |
-    echo "Contents of Artifact Staging Directory:"
-    dir $(Build.ArtifactStagingDirectory)/drop
-  displayName: 'Verify Files in Artifact Staging Directory'
 
 - task: PublishBuildArtifacts@1
   inputs:
