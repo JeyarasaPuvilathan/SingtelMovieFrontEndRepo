@@ -44,5 +44,6 @@ steps:
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
 
+
 variables:
   system.debug: true
