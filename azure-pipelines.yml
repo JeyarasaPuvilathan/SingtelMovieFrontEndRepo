@@ -9,14 +9,16 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '18.x' # Choose a Node.js version compatible with your Angular version
+    versionSpec: '16.x' # Choose a Node.js version compatible with your Angular version
   displayName: 'Install Node.js'
 
 - script: |
+    rm -rf node_modules
+    rm package-lock.json
     npm install -g @angular/cli
     npm install
     ng build --prod
-  displayName: 'Build Angular Application'
+  displayName: 'Clean and Build Angular Application'
 
 - task: CopyFiles@2
   inputs:
