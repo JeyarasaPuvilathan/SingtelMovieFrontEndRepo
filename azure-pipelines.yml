@@ -37,6 +37,6 @@ steps:
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)/dist/singtel-movie-front-end/**/*'
+    package: '$(Build.ArtifactStagingDirectory)/drop/**/*'
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
