@@ -15,7 +15,7 @@ steps:
 - script: |
    npm install -g @angular/cli
    npm install
-   ng build --prod --output-path=dist/singtel-movie-front-end
+   ng build --prod --output-path=dist/singtel-movie-front-end --aot --optimization
   displayName: 'Build Angular Application'
 
 - task: CopyFiles@2
