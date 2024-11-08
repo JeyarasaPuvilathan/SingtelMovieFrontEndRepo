@@ -4,30 +4,33 @@ trigger:
       - main
 
 pool:
-   name: SelfHostedPool
+  name: SelfHostedPool
+
+variables:
+  system.debug: true
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '18.x' # Choose a Node.js version compatible with your Angular version
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
 
 - script: |
-   npm install -g @angular/cli
-   npm install
-   ng build --prod
+    npm install -g @angular/cli
+    npm install
+    ng build --configuration=production
   displayName: 'Build Angular Application'
 
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Correct path to the dist folder
-    Contents: '**/*'  # Wildcard to include all files
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'  # Ensure the target folder is inside the artifact staging directory
+    SourceFolder: '$(Build.SourcesDirectory)/dist/singtel-movie-front-end'  # Ensure this matches your angular.json outputPath
+    Contents: '**/*'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)'  # Path to publish the drop folder
+    pathToPublish: '$(Build.ArtifactStagingDirectory)/drop'
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish Artifact'
@@ -36,9 +39,6 @@ steps:
   inputs:
     azureSubscription: 'MyAzureSubscription'
     appName: 'angularAppTestDemo'
-    package: '$(Build.ArtifactStagingDirectory)'  # Correct path to package
+    package: '$(Build.ArtifactStagingDirectory)/drop'
     appType: 'webApp'
   displayName: 'Deploy to Azure App Service'
-
-variables:
-  system.debug: true
