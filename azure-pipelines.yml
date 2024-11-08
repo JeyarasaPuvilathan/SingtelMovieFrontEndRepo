@@ -24,7 +24,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy files to Artifact Staging Directory'
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/dist/singtel-movie-front-end'  # Ensure this matches your angular.json outputPath
+    SourceFolder: '$(Build.SourcesDirectory)/SingtelMovieFrontEnd'  # Ensure this matches your angular.json outputPath
     Contents: '**/*'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
 
