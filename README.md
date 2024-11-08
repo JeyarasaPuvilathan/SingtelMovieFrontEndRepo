@@ -11,4 +11,5 @@ Note: During the deployment of the Angular application, I encountered the follow
 ##[error]No hosted parallelism has been purchased or granted. To request a free parallelism grant, please fill out the following form: https://aka.ms/azpipelines-parallelism-request
 
 I have submitted a request for parallel job access, but as it is not automatically granted to my organization, it may take more than a day for Azure to process my request.
+once get acceess, will deploy the Angular application.
 
